@@ -1,14 +1,90 @@
-// import React from 'react'
+import React from 'react'
 import styled from 'styled-components'
+import { GlobalContext } from '../Data/Global'
 
 const LandingPage = () => {
+
+
+    const data =  [
+        {
+            "id": 1,
+            "question": "3 + 9",
+            "answer": 12,
+            "a": 12,
+            "b":2,
+            "c":6,
+            "d": 7
+        },
+        {
+            "id": 2,
+            "question": "3 + 0",
+            "answer": 12,
+            "a": 12,
+            "b":2,
+            "c":6,
+            "d": 7
+        },
+        {
+            "id": 3,
+            "question": "3 + 8",
+            "answer": 12,
+            "a": 12,
+            "b":2,
+            "c":6,
+            "d": 7
+        },
+        {
+            "id": 4,
+            "question": "3 + 1",
+            "answer": 12,
+            "a": 12,
+            "b":2,
+            "c":6,
+            "d": 7
+        },
+        {
+            "id": 5,
+            "question": "3 + 2",
+            "answer": 12,
+            "a": 12,
+            "b":2,
+            "c":6,
+            "d": 7
+        },
+        {
+            "id": 6,
+            "question": "3 + 3",
+            "answer": 12,
+            "a": 12,
+            "b":2,
+            "c":6,
+            "d": 7
+        }
+    ]
+
+
+    const fn  = (value: number) => {
+        const question = data.filter((e) => e.id === value)
+        return question
+    }
+	const allow = React.useContext(GlobalContext)
+    console.log("all", allow?.questiondata);
+    
+    console.log("data1", fn(2));
+    
+    React.useEffect(() =>{
+        console.log("data", fn(allow?.questiondata));
+    },[])
+
     return (
         <div>
             <Container>
-                <Main>
+             {
+                fn(1).map((props: any) => (
+                    <Main>
                     <Holder>
                         <Card>
-                            Card
+                            {props?.question}
                         </Card>
                         <Circle />
                         <CircleII />
@@ -16,22 +92,45 @@ const LandingPage = () => {
                     </Holder>
 
                     <BottomCard>
+                        <CircleIV/>
                         <But>
-                            <Butt>Option A</Butt>
-                            <Butt>Option B</Butt>
+                            <Butt>{props.a}</Butt>
+                            <Butt>{props.b}</Butt>
                         </But>
                         <But>
-                            <Butt>Option C</Butt>
-                            <Butt>Option D</Butt>
+                            <Butt>{props.c}</Butt>
+                            <Butt>{props.d}</Butt>
                         </But>
+                        <CircleV/>
                     </BottomCard>
                 </Main>
+                ))
+             }
             </Container>
         </div>
     )
 }
 
 export default LandingPage
+
+
+
+const CircleV = styled.div``
+
+const CircleIV = styled.div`
+width: 100px;
+height: 100px;
+border-radius: 50%;
+
+background: rgba( 255, 255, 255, 0.25 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 17px );
+-webkit-backdrop-filter: blur( 17px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+z-index: 99999;
+`
+    
 
 const CircleIII = styled.div`
 width: 100px;
@@ -110,7 +209,8 @@ display:flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
-margin-top: 20px
+margin-top: 20px;
+/* position: relative; */
 `
 
 const Holder = styled.div`
