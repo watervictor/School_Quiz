@@ -1,24 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import img1 from "../assets/log.png"
 import { NavLink, useNavigate } from "react-router-dom";
 
 import {Allquestion} from "../Utils/Question"
-
+import {getDataBase,getOneDataBase} from "../Utils/schoolAPI"
 
 
 const StartTest = () => {
-	const [email, setEmail] = useState<string>("");
-	console.log(Allquestion);
 
-	const [aquestion, SetQuestion] = useState("")
+	const [email,setEmail] = React.useState<string>("")
+    const [newState1, setNewState1] = useState<any>({})
 
-	const GetAQuestion = (id: any) =>{
-const test = Allquestion.filter((el: any) => el?.id === id).map((el) => el?.Question).toString();
-SetQuestion(test)
-	}
-	console.log(GetAQuestion);
-	
+
+	console.log(`top ${email}`);
 
 	return (
 		<div>
@@ -59,24 +54,40 @@ SetQuestion(test)
 							/> */}
 
 						<Input
-								// value={aquestion}
-								onChange={(e) => {
-									setEmail(e.target.value)
-								}}
+							value={email}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+								setEmail(e.target.value.toLowerCase());
+								
+							}}
 								placeholder='Please enter your selected number '
 								type='text'
 							/>
-							
-							<NavLink to="/questions">
-							<Button
-								cursor={email !== "" ? "" : "value"}
-								bg={email !== "" ? "" : "value"}
-									>
-									Start Quiz
+							{email !== "" ? (
+						<NavLink to="/questions">
+									<Button
+									style={{ cursor: "pointer" }}>
+									{" "}
+									Start Test
 								</Button>
-							</NavLink>
-							
-						
+						</NavLink>
+							) : (
+								<Button
+									style={{ backgroundColor: "silver", cursor: "not-allowed" }}>
+									Start Test
+								</Button>
+							)}
+						{
+							email !== "" ? 	<div>
+							This is question {email}
+						</div>: <div>
+						{
+						   newState1?.id ? <div>
+							{newState1?.id!} - {newState1?.question!}
+						   </div> : <div>No Value Choosen</div>
+						   }
+						</div>
+						 
+						}
 					</Second>
 				</Wrapper>
 			</Container>
@@ -112,20 +123,18 @@ const Desc = styled.div`
 `;
 
 
-const Button = styled.button<{bg: string, cursor: string}>`
+const Button = styled.button`
 	width: 200px;
 	height: 50px;
 	margin-bottom: 20px;
 	border: none;
 	outline: none;
 	border-radius: 5px;
-	/* background-color: purple; */
-	background-color: ${({bg}) => bg ? "silver" : "purple"};
+	background-color: purple;
 	color: white;
 	font-family: Poppins;
 	text-transform: uppercase;
 	font-weight: 500;
-	cursor: ${({cursor}) => cursor ? "not-allowed" : "pointer"};
 font-size:18px;
 
 	@media screen and (max-width: 960px) {
