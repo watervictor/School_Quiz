@@ -1,19 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import styled from "styled-components";
 import img1 from "../assets/log.png"
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { GlobalContext } from "../Data/Global";
 
-import {Allquestion} from "../Utils/Question"
-import {getDataBase,getOneDataBase} from "../Utils/schoolAPI"
 
 
 const StartTest = () => {
+
+
+	
 
 	const [email,setEmail] = React.useState<string>("")
     const [newState1, setNewState1] = useState<any>({})
 
 
 	console.log(`top ${email}`);
+
+	const allow = React.useContext(GlobalContext)
+
 
 	return (
 		<div>
@@ -54,9 +59,12 @@ const StartTest = () => {
 							/> */}
 
 						<Input
+							// value={email?.questiondata}
 							value={email}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
 								setEmail(e.target.value.toLowerCase());
+								console.log(Number(e.target.value));
+								
 								
 							}}
 								placeholder='Please enter your selected number '
@@ -78,7 +86,7 @@ const StartTest = () => {
 							)}
 						{
 							email !== "" ? 	<div>
-							This is question {email}
+							This is question {allow?.questiondata}
 						</div>: <div>
 						{
 						   newState1?.id ? <div>
